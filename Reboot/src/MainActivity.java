@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
+	static final String REBOOT_TEST_COUNT_FILE = "/data/tmp/StressRebootCount";
 	boolean flag = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,5 +55,22 @@ public class MainActivity extends Activity {
 				flag = false;
 			}
 		});
+	}
+	
+	protected void FileWrite(int count) throw Exception{
+		File f = new File(REBOOT_TEST_COUNT_FILE);
+		if(!f.exists()){
+			f.createNewFile();
+		}
+		f.write(count);
+		f.flush();
+		f.close();
+	}
+	
+	protected int FileRead() throw Exception{
+		File f = new File(REBOOT_TEST_COUNT_FILE);
+		f.read();
+		f.close();
+		return 0;
 	}
 }
