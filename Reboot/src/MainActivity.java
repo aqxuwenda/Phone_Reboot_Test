@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 import android.util.Log;
 
 @SuppressLint("NewApi")
@@ -29,7 +30,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		// LinearLayout linearLayout = (LinearLayout)findViewById(R.id.LinearLayout);
+		
 		Button start = (Button) findViewById(R.id.start);
 		Button stop = (Button) findViewById(R.id.stop);
 		EditText seconds = (EditText) findViewById(R.id.seconds);
@@ -72,6 +74,15 @@ public class MainActivity extends Activity {
 		};
 		Timer timer = new Timer();
 		timer.schedule(task,waittime*1000);
+		//@test by xuwenda
+		// Button forward = (Button)findViewById(R.id.forward);
+		// forward.setOnClickListener(new OnClickListener(){
+		// 	@Override
+		// 	public void onClick(View v){
+		// 		Intent intent = new Intent(MainActivity.this,TestPassActivity.class);
+		// 		startActivity(intent);
+		// 	}
+		// });
 	}
 	
 	protected void FileWrite(int count) {

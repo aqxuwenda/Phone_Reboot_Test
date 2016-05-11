@@ -42,6 +42,22 @@
                 <action android:name="Acitivity.already.started"/>                
             </intent-filter>
         </receiver>
+        <activity
+            android:name=".TestFailActivity"
+            android:label="@string/result">
+            <intent-filter>
+                <action android:name="android.intent.action.Main"/>
+                <action android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TestPassActivity"
+            android:label="@string/result">
+            <intent-filter>
+                <action android:name="android.intent.action.Main"/>
+                <action android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
     
 
