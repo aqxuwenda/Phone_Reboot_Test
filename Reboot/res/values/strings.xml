@@ -3,4 +3,5 @@
 	<string name="TestStart">TestStart</string>
 	<string name="TestStop">TestStop</string>
 	<string name="app_name">Reboot</string>
+	<string name="value">5</string>
 </resources>

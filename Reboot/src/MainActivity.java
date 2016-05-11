@@ -1,11 +1,12 @@
 package com.longcheer.reboot;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
+
+import java.io.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.content.Intent;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,13 +16,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Log;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
 
-	static final String REBOOT_TEST_COUNT_FILE = "/data/tmp/StressRebootCount";
-	private FileInputStream fis;
-	private FileOutputStream fos;
+	static final String REBOOT_TEST_COUNT_FILE = "/sdcard/StressRebootCount.txt";
+	static final String TAG = "XUWENDA";
+	private Intent intent = new Intent("Acitivity.already.started");
+	private int count = 0;
 	boolean flag = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,39 +33,24 @@ public class MainActivity extends Activity {
 
 		Button start = (Button) findViewById(R.id.start);
 		Button stop = (Button) findViewById(R.id.stop);
+		EditText seconds = (EditText) findViewById(R.id.seconds);
+		int waittime = Integer.parseInt(seconds.getText().toString());
 		start.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				PowerManager pms = (PowerManager) getSystemService(POWER_SERVICE);
-//				EditText seconds = (EditText) findViewById(R.id.seconds);
-//				int waittime = Integer.parseInt(seconds.getText().toString());
 				EditText counts = (EditText) findViewById(R.id.counts);
-				int count = Integer.parseInt(counts.getText().toString());
-//				int i = 0;
-//				while (count > 0 || i < count || !flag) {
-//					try {
-//						Thread.sleep(waittime);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					i++;
-//
-//					Toast.makeText(MainActivity.this, "---"+FileRead()+"---", Toast.LENGTH_LONG).show();
-//
-//	
-//					pms.reboot(null);
-//					
-//				}
+				count = Integer.parseInt(counts.getText().toString());
+				
 				FileWrite(count);
-				if(FileRead()>0){
-					int c = FileRead()-1;
-					FileWrite(c);
-					Toast.makeText(MainActivity.this, "---"+FileRead()+"---", Toast.LENGTH_LONG).show();
-					pms.reboot(null);
-				}
+				Toast.makeText(MainActivity.this, "---------"+count+"-------", Toast.LENGTH_LONG).show();
+				
+				
+				Log.d(TAG, "The Phone will Reboot!");
+				pms.reboot(null);//Reboot start
+				
 			}
 		});
 		
@@ -71,9 +59,20 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				flag = false;
+				FileWrite(0);
+				Toast.makeText(MainActivity.this,"Stress test Stop!",Toast.LENGTH_LONG).show();
 			}
 		});
+		
+		TimerTask task = new TimerTask(){
+
+			@Override
+			public void run(){
+				sendBroadcast(intent);
+			}
+		};
+		Timer timer = new Timer();
+		timer.schedule(task,waittime*1000);
 	}
 	
 	protected void FileWrite(int count) {
@@ -81,39 +80,37 @@ public class MainActivity extends Activity {
 			File f = new File(REBOOT_TEST_COUNT_FILE);
 			if(!f.exists()){
 				f.createNewFile();
+				Log.d(TAG,"REBOOT_TEST_COUNT_FILE createNewFile");
 			}
-			fos = new FileOutputStream(REBOOT_TEST_COUNT_FILE);
-			fos.write(count);
-			fos.flush();
+			FileWriter fw = new FileWriter(REBOOT_TEST_COUNT_FILE);
+			Log.d(TAG,"FileWrite count"+count);
+			fw.write(count);
+			fw.flush();
+			fw.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			try {
-				fos.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
 	protected int FileRead() {
-		int count = 0;
+		File f = new File(REBOOT_TEST_COUNT_FILE);
+		if(!f.exists()){
+			Log.d(TAG,"REBOOT_TEST_COUNT_FILE not exists!");
+			return 0;
+		}
 		try {
-			File f = new File(REBOOT_TEST_COUNT_FILE);
-			if(!f.exists()){
-				return 0;
-			}
-			fis = new FileInputStream(REBOOT_TEST_COUNT_FILE);
-			count = fis.read();
+			FileReader fr = new FileReader(REBOOT_TEST_COUNT_FILE);
+			count= fr.read();
+			Log.d(TAG, "FileRead count"+count);
+			fr.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
