@@ -16,8 +16,8 @@ import android.util.Log;
 @SuppressLint("NewApi")
 public class CheckReceiver extends BroadcastReceiver{
 	static final String REBOOT_TEST_COUNT_FILE = "/sdcard/StressRebootCount.txt";
-	static final String boot_broadcast = "android.intent.action.BOOT_COMPLETED";
-	static final String TAG = "XUWENDA";
+	//static final String boot_broadcast = "android.intent.action.BOOT_COMPLETED";
+	//static final String TAG = "XUWENDA";
 	int count = 0;
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -27,12 +27,7 @@ public class CheckReceiver extends BroadcastReceiver{
 		if(action.equals("Acitivity.already.started")){
 			if(count > 0){
 				FileWrite(count-1);
-				PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-				// try{
-				// 	Thread.sleep(2000);
-				// }catch(InterruptedException e){
-				// 	e.printStackTrace();
-				// }	
+				PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);	
 				pm.reboot(null);
 			}
 			return;
@@ -44,10 +39,8 @@ public class CheckReceiver extends BroadcastReceiver{
 			File f = new File(REBOOT_TEST_COUNT_FILE);
 			if (!f.exists()) {
 				f.createNewFile();
-				Log.d(TAG, "REBOOT_TEST_COUNT_FILE createNewFile");
 			}
 			FileWriter fw = new FileWriter(REBOOT_TEST_COUNT_FILE);
-			Log.d(TAG, "Check Receiver :FileWrite count" + count);
 			fw.write(count);
 			fw.flush();
 			fw.close();
@@ -63,13 +56,11 @@ public class CheckReceiver extends BroadcastReceiver{
 	private int FileRead() {
 		File f = new File(REBOOT_TEST_COUNT_FILE);
 		if (!f.exists()) {
-			Log.d(TAG, "REBOOT_TEST_COUNT_FILE not exists!");
 			return 0;
 		}
 		try {
 			FileReader fr = new FileReader(REBOOT_TEST_COUNT_FILE);
 			count = fr.read();
-			Log.d(TAG, "Check Receiver:FileRead count" + count);
 			fr.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

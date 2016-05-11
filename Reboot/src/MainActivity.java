@@ -25,7 +25,6 @@ public class MainActivity extends Activity {
 	static final String TAG = "XUWENDA";
 	private Intent intent = new Intent("Acitivity.already.started");
 	private int count = 0;
-	boolean flag = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,10 +79,8 @@ public class MainActivity extends Activity {
 			File f = new File(REBOOT_TEST_COUNT_FILE);
 			if(!f.exists()){
 				f.createNewFile();
-				Log.d(TAG,"REBOOT_TEST_COUNT_FILE createNewFile");
 			}
 			FileWriter fw = new FileWriter(REBOOT_TEST_COUNT_FILE);
-			Log.d(TAG,"FileWrite count"+count);
 			fw.write(count);
 			fw.flush();
 			fw.close();
@@ -99,13 +96,11 @@ public class MainActivity extends Activity {
 	protected int FileRead() {
 		File f = new File(REBOOT_TEST_COUNT_FILE);
 		if(!f.exists()){
-			Log.d(TAG,"REBOOT_TEST_COUNT_FILE not exists!");
 			return 0;
 		}
 		try {
 			FileReader fr = new FileReader(REBOOT_TEST_COUNT_FILE);
 			count= fr.read();
-			Log.d(TAG, "FileRead count"+count);
 			fr.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
