@@ -4,8 +4,9 @@
 	<string name="TestStop">TestStop</string>
 	<string name="app_name">Reboot</string>
 	<string name="value">5</string>
+	<string name="counts">3</string>
 
 	<string name="result">result</string>
-	<string name="testResult">Test Result</string>
+	<string name="testfail">Reboot Stress Test Fail!</string>
 	<string name="testSuccess">Reboot Stress Test Pass!</string>
 </resources>

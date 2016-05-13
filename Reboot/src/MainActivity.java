@@ -1,3 +1,7 @@
+/*Author: longcheer xuwenda 
+/ Version: v2.0
+*/
+
 package com.longcheer.reboot;
 
 
@@ -43,15 +47,19 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				PowerManager pms = (PowerManager) getSystemService(POWER_SERVICE);
 				EditText counts = (EditText) findViewById(R.id.counts);
+				if (counts.getText().toString().equals("")) {
+					return;
+				}
 				count = Integer.parseInt(counts.getText().toString());
-				
 				FileWrite(count);
+				
 				Toast.makeText(MainActivity.this, "---------"+count+"-------", Toast.LENGTH_LONG).show();
 				
 				
 				Log.d(TAG, "The Phone will Reboot!");
-				pms.reboot(null);//Reboot start
-				
+				if(count > 0){
+					pms.reboot(null);//Reboot start
+				}
 			}
 		});
 		
