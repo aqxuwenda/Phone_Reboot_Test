@@ -1,12 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-	<string name="TestStart">TestStart</string>
-	<string name="TestStop">TestStop</string>
-	<string name="app_name">Reboot</string>
-	<string name="value">5</string>
-	<string name="counts">3</string>
+<resources>
+    <string name="TestStart">开始重启压力</string>
+	<string name="TestStop">停止重启压力</string>
+	<string name="app_name">开关机压力测试</string>
+	<string name="waittime">0</string>
+	<string name="counts">0</string>
+	<string name="text_waittime">间隔时间：</string>
+	<string name="text_counts">重启次数：</string>
+	<string name="text_current">剩余次数：</string>
 
 	<string name="result">result</string>
-	<string name="testfail">Reboot Stress Test Fail!</string>
-	<string name="testSuccess">Reboot Stress Test Pass!</string>
+	<string name="second"> 秒</string>
+	<string name="text_countdowning">关机倒计时:</string>
+	<string name="text_countdown">关机倒计时:+∞ 秒</string>
+	<string name="tip">请输入重启次数和间隔时间</string>
+	<string name="Stoptip">停止压力测试</string>
+	<string name="testfail">重启压力异常!</string>
+	<string name="testSuccess">重启压力报告!</string>
 </resources>
